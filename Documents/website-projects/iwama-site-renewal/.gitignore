@@ -1,0 +1,20 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Node (使わない方針だが念のため)
+node_modules/
+
+# ローカルWP環境の実体（手順のみ管理、コア/DBは追跡しない）
+local/wp/
+local/*.sql
+local/*.zip
+
+# 親テーマソースを一時取得した場合（成果物ではない）
+theme/_parent-reference/
+
+# 環境・秘匿
+.env
+*.local

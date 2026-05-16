@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>肉のいわま — リニューアルプレビュー</title>
+
+  <!-- Google Fonts: Noto Serif JP (高級感) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&display=swap">
+
+  <!-- Font Awesome (本番サイトと同じ) -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        crossorigin="anonymous">
+
+  <!-- Bootstrap (nikunoiwama 子テーマが使用) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+  <!-- 既存 base.min.css の主要スタイルを再現 -->
+  <style>
+    /* base.min.css から抜粋した既存スタイル (刷新前の状態) */
+    html { overflow-x: hidden; }
+    body { background-color: #FFF; overflow-x: hidden; }
+    ol, ul { list-style: none; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; }
+    a:hover { opacity: .7; transition: 1s all; color: #00F; }
+    h1 { font-size: 0; }
+    .font-kyoukasyo {
+      font-family: "游明朝体", YuMincho, "游明朝 Medium", serif;
+    }
+    .bg-bk { background-color: #000; }
+    .wrap { margin: 0 auto; max-width: 1000px; }
+    .view-bg {
+      background-position: center; background-repeat: no-repeat;
+      background-size: cover; height: 60vh; width: 100%;
+    }
+    header { position: relative; }
+    header h1 { background-color: #000; color: #fff; font-size: .8rem; padding: 3px; }
+    header .logo { width: auto; max-height: 60px; margin: 5px; }
+    header.kalbi { background-color: #d10021; color: #FFF; }
+    header.hormon { background-color: #fcef42; }
+    .top_image {
+      background-image: url('https://m-iwama.com/wp-content/themes/nikunoiwama/images/top_iwama.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      width: 100%; height: 25vh;
+    }
+    .top_kalbi, .top_hormon { padding: 4px 8px; }
+    .sp_nav {
+      display: block; position: absolute; right: 20px; top: 5px; text-align: left;
+    }
+    .sp_nav ul li { text-align: center; margin: 3px; }
+    .pc_nav {
+      display: none; position: absolute; right: 20px; top: 5px;
+      text-align: right; line-height: 1.3rem;
+    }
+    #main { padding: 5px; background: #f1f1f1; }
+    .boxA, .boxB { border: solid 1px #000; border-radius: 0; }
+    .boxA .head, h2.card-header.head {
+      border-bottom: solid 1px #000; background-color: #000;
+      color: #FFF; text-align: center; padding: 8px;
+    }
+    h2.titleA {
+      border-radius: 0; background-color: #000;
+      color: #FFF; padding: .75rem; text-align: center;
+    }
+    #sns { margin: 20px 0; }
+    .snsQR { display: none; }
+    .sns p { font-size: 1.3rem; margin: 1rem 0; text-align: center; }
+    .iwama-sns { font-size: 1.3rem; }
+    footer { padding: 50px 0; }
+    footer .title { font-size: 1.5rem; margin-bottom: 30px; }
+    .copy { background-color: #000; color: #FFF; padding: 4px; text-align: center; }
+    @media (min-width: 769px) {
+      .sp_nav { display: none; }
+      .pc_nav { display: block; }
+      .top_image { height: 40vh; background-size: cover; }
+    }
+  </style>
+
+  <!-- ★ 本子テーマの overlay.css -->
+  <link rel="stylesheet" href="../theme/nikunoiwama-child/assets/css/overlay.css">
+</head>
+<body id="top">
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <h1><a href="#">株式会社 肉のいわま</a></h1>
+    <div>
+      <div class="text-center">
+        <a href="#">
+          <img src="https://m-iwama.com/wp-content/themes/nikunoiwama/images/top_logo.png"
+               alt="肉のいわま" class="logo">
+        </a>
+      </div>
+
+      <!-- スマホナビ -->
+      <nav class="sp_nav">
+        <ul>
+          <li><a href="#"><span>会社概要</span></a></li>
+          <li><a href="#"><span>吉川カルビ</span></a></li>
+          <li><a href="#"><span>吉川ホルモン</span></a></li>
+        </ul>
+      </nav>
+
+      <!-- PCナビ -->
+      <nav class="pc_nav">
+        <span>048-940-7949</span>
+        <a href="#">会社概要</a>
+        <a href="#">吉川カルビ</a>
+        <a href="#">吉川ホルモン</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== 店舗セレクター + ヒーロー ===== -->
+  <div class="container-fluid bg-bk p-0">
+    <div class="row wrap py-2 px-0">
+      <div class="col-12 col-md-6 top_kalbi mt-1 mt-md-0">
+        <a href="#">
+          <img src="https://m-iwama.com/wp-content/themes/nikunoiwama/images/sw_karbi.png"
+               alt="吉川カルビ">
+        </a>
+      </div>
+      <div class="col-12 col-md-6 top_hormon mt-1 mt-md-0">
+        <a href="#">
+          <img src="https://m-iwama.com/wp-content/themes/nikunoiwama/images/sw_hormon.png"
+               alt="吉川ホルモン">
+        </a>
+      </div>
+      <div class="col-12 top_image mt-2"></div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main id="main">
+
+    <!-- お知らせ -->
+    <div class="container wrap mt-4">
+      <div class="card boxA">
+        <h2 class="card-header head">店舗からのお知らせ</h2>
+        <div class="card-body">
+          <dl class="row mb-2">
+            <dt class="col-4 col-md-2">2025.01.10</dt>
+            <dd class="col-8 col-md-10">年末年始の営業時間についてのお知らせ</dd>
+          </dl>
+          <dl class="row mb-2">
+            <dt class="col-4 col-md-2">2024.12.20</dt>
+            <dd class="col-8 col-md-10">忘年会のご予約受付中です。お電話にてお気軽にどうぞ。</dd>
+          </dl>
+          <dl class="row mb-2">
+            <dt class="col-4 col-md-2">2024.11.15</dt>
+            <dd class="col-8 col-md-10">吉川カルビ・ホルモン 黒毛和牛一頭買いフェア開催</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!-- 店舗紹介 -->
+    <section class="container wrap my-5">
+      <h2 class="titleA mb-3">運営店舗のご紹介</h2>
+      <div class="card boxA">
+        <div class="card-body row justify-content-center">
+          <div class="col-md-6 order-md-2">
+            <img src="https://m-iwama.com/wp-content/themes/nikunoiwama/images/bnr_photo_karbi.jpg"
+                 alt="吉川カルビ" style="width:100%;">
+          </div>
+          <div class="col-md-6 order-md-1 mt-2 align-self-center p-3">
+            <img src="https://m-iwama.com/wp-content/uploads/2020/08/kalbi_logo.jpg"
+                 alt="吉川カルビ" style="max-width:200px;display:block;margin-bottom:12px;">
+            <p class="font-kyoukasyo" style="border-top:1px solid #000;padding-top:5px;font-size:.8rem;">
+              〒342-0045 吉川市木売3-1-1 戸張マンション102<br>
+              （吉川駅南口から徒歩1分）<br>
+              TEL：048-940-7949<br>
+              営業時間 12:00〜15:00 / 16:00〜23:00（L.O.22:00） 不定休
+            </p>
+            <a href="#" style="border-radius:5rem;background-color:red;padding:.5rem;color:#FFF;font-size:1.5rem;">
+              <span style="color:#FF0">▶</span>吉川カルビのページへ
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SNS -->
+    <div id="sns" class="container mt-2 my-md-5">
+      <p class="text-center mt-2 mb-0 my-md-5 font-kyoukasyo iwama-sns">
+        いわまと直接つ・な・げ・るＳＮＳ
+      </p>
+      <div class="row">
+        <div class="sns col-6 text-center">
+          <p>
+            <img src="https://m-iwama.com/wp-content/themes/nikunoiwama/images/line_qr_bw.png"
+                 alt="LINEのQRコード" class="snsQR" width="220" height="220"><br>
+            <a href="https://lin.ee/YgdpePN" target="_blank">
+              <i class="fab fa-line mx-3"></i>
+              <span class="mx-3 mx-md-0">LINEの</span><span>登録はこちら</span>
+            </a>
+          </p>
+        </div>
+        <div class="sns col-6 text-center">
+          <p>
+            <img src="https://m-iwama.com/wp-content/themes/nikunoiwama/images/insta_qrcode.jpg"
+                 alt="Instagramのコード" class="snsQR" width="240" height="240"><br>
+            <a href="https://www.instagram.com/yoshikawa_karubi" target="_blank">
+              <i class="fa fa-instagram mx-3"></i>
+              <span>Instagramの</span><span>登録はこちら</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- /#main -->
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="footer" class="footer footer-container">
+
+    <!-- 採用バナー -->
+    <div class="container mb-4 text-center">
+      <a href="#" rel="nofollow" target="_blank">
+        <img src="https://m-iwama.com/wp-content/uploads/2021/06/recruit_banner.png"
+             alt="スタッフ募集">
+      </a>
+    </div>
+
+    <!-- 店舗一覧 -->
+    <div class="container mb-5">
+      <h2 class="titleA mb-2">運営店舗のご紹介</h2>
+      <div class="row">
+        <div class="order-1 col-12 col-sm-6">
+          <a href="#">
+            <img src="https://m-iwama.com/wp-content/themes/nikunoiwama/images/bnr_photo_karbi.jpg"
+                 alt="おいしいカルビ肉">
+          </a>
+        </div>
+        <div class="order-2 col-12 col-sm-6 p-4">
+          <img src="https://m-iwama.com/wp-content/uploads/2020/08/kalbi_logo.jpg"
+               alt="吉川カルビ" style="max-width:160px;">
+          <p class="font-kyoukasyo mt-2"
+             style="border-top:1px solid #000;padding-top:5px;font-size:.8rem;">
+            〒342-0045 吉川市木売3-1-1 戸張マンション102（吉川駅南口から徒歩1分）<br>
+            TEL：048-940-7949<br>
+            営業時間 12:00〜15:00 / 16:00〜23:00（L.O.22:00） 不定休
+          </p>
+          <a href="#" style="border-radius:5rem;background-color:red;padding:.5rem;
+             color:#FFF;font-size:1.5rem;">
+            <span style="color:#FF0">▶</span>吉川カルビのページへ
+          </a>
+        </div>
+
+        <div class="order-3 col-12 col-sm-6 order-sm-4 my-3">
+          <a href="#">
+            <img src="https://m-iwama.com/wp-content/themes/nikunoiwama/images/bnr_photo_hormon.jpg"
+                 alt="おいしいホルモン">
+          </a>
+        </div>
+        <div class="order-4 col-12 col-sm-6 order-sm-3 my-3 p-4">
+          <p class="font-kyoukasyo mt-2"
+             style="border-top:1px solid #000;padding-top:5px;font-size:.8rem;">
+            〒342-0045 吉川市木売3-2-4 カーサ戸部102（吉川駅南口から徒歩30秒）<br>
+            TEL.：048-940-7948<br>
+            営業時間 13:00〜0:00（L.O.23:00） 不定休
+          </p>
+          <a href="#" style="border-radius:5rem;background-color:red;padding:.5rem;
+             color:#FFF;font-size:1.5rem;">
+            <span style="color:#FF0">▶</span>吉川ホルモンのページへ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="w100">
+
+    <!-- CONTENTS / フッターナビ -->
+    <div class="container wrap p-0">
+      <h2 class="title text-center my-2">CONTENTS</h2>
+      <div class="row my-2 mx-auto">
+        <div class="col-12 col-md-4 text-center align-self-center order-3 order-md-1">
+          <a href="#">
+            <img src="https://m-iwama.com/wp-content/themes/nikunoiwama/images/footer_logo.png"
+                 alt="肉のいわま">
+          </a>
+        </div>
+        <div class="col-12 col-md-4 order-1 order-md-2">
+          <ul>
+            <li><a href="#">会社概要</a></li>
+            <li><a href="#">吉川カルビ</a></li>
+            <li><a href="#">吉川ホルモン</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-4 order-2 order-md-3">
+          <ul>
+            <li><a href="#">肉語り（ブログ）</a></li>
+            <li><a href="#">採用情報</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy text-center">
+      &copy; 2024 肉のいわま. All Rights Reserved.
+    </div>
+  </footer>
+
+  <!-- ===== スマホ固定CTAバー ===== -->
+  <script src="../theme/nikunoiwama-child/assets/js/cta-bar.js"></script>
+
+  <!-- プレビュー用バッジ -->
+  <style>
+    #preview-badge {
+      position: fixed; top: 10px; right: 10px; z-index: 99999;
+      background: rgba(212,175,55,.92); color: #000;
+      font-size: 11px; font-weight: 700; padding: 4px 10px;
+      border-radius: 20px; letter-spacing: .05em;
+      box-shadow: 0 2px 8px rgba(0,0,0,.4);
+      pointer-events: none;
+    }
+  </style>
+  <div id="preview-badge">PREVIEW</div>
+
+</body>
+</html>

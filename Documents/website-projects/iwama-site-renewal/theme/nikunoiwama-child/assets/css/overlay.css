@@ -1,0 +1,898 @@
+/* ============================================================
+   overlay.css — 肉のいわま リニューアル
+   対象: https://m-iwama.com/ (cocoon-master + nikunoiwama child)
+   方針: 既存HTMLを変更せず CSS 上書きのみでデザイン刷新
+   ============================================================ */
+
+/* Google Fonts: 明朝系で高級感を演出 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&display=swap');
+
+/* ----------------------------------------------------------
+   0. デザイントークン
+   ---------------------------------------------------------- */
+:root {
+  --bg:          #080808;
+  --bg-card:     #111111;
+  --bg-section:  #0d0d0d;
+  --text:        #eeeeee;
+  --text-muted:  #888888;
+  --red:         #b8192a;
+  --gold:        #c9a84c;
+  --gold-light:  #e8cc80;
+  --gold-dim:    #7a6320;
+  --border:      #222222;
+  --border-gold: #3a2e10;
+  --radius:      2px;
+  --font-serif:  'Noto Serif JP', '游明朝体', YuMincho, 'ヒラギノ明朝 ProN', serif;
+  --font-sans:   'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  --shadow:      0 4px 24px rgba(0, 0, 0, .6);
+  --shadow-lg:   0 8px 48px rgba(0, 0, 0, .8);
+  --gold-line:   linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ----------------------------------------------------------
+   1. グローバル
+   ---------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 15px;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+  /* スマホCTAバー分の余白 */
+  padding-bottom: 58px;
+}
+
+/* 見出しは明朝系で格調高く */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif) !important;
+  letter-spacing: .12em;
+}
+
+p {
+  line-height: 1.9;
+}
+
+@media (min-width: 769px) {
+  body { padding-bottom: 0; }
+}
+
+a {
+  color: var(--text);
+}
+
+a:hover {
+  color: var(--gold) !important;
+  opacity: 1 !important;
+  transition: color .2s ease;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* cocoon のメインエリア背景を透過 */
+#main,
+.main {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.wrap {
+  background: transparent !important;
+}
+
+/* ----------------------------------------------------------
+   2. ヘッダー
+   ---------------------------------------------------------- */
+header {
+  background-color: #000 !important;
+  border-bottom: 1px solid var(--border);
+  padding: 6px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* WPテーマが付ける store-specific 色を上書き */
+header.kalbi,
+header.hormon {
+  background-color: #000 !important;
+  color: #fff;
+}
+
+/* h1 (店名テキスト) — CSSで0pxにされているが念のため */
+header h1 {
+  background-color: #000 !important;
+  font-size: 0 !important;
+  margin: 0;
+  padding: 0;
+}
+
+/* ロゴ */
+header .logo {
+  max-height: 56px;
+  width: auto;
+  display: block;
+}
+
+/* スマホ: ロゴ中央 */
+@media (max-width: 767px) {
+  header .logo {
+    margin: 0 auto;
+    max-height: 48px;
+  }
+}
+
+/* PC: ヘッダー内レイアウト — ロゴ左・ナビ右 */
+@media (min-width: 768px) {
+  header > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  header .text-center {
+    text-align: left !important;
+    flex-shrink: 0;
+  }
+
+  header .logo {
+    margin: 0;
+  }
+}
+
+/* PC ナビ */
+.pc_nav {
+  color: #fff;
+  line-height: 2rem;
+}
+
+.pc_nav a {
+  color: #ddd;
+  font-size: .9rem;
+  letter-spacing: .1em;
+  margin-left: 20px;
+}
+
+.pc_nav a:hover {
+  color: var(--gold) !important;
+}
+
+/* 電話番号 */
+.pc_nav span {
+  color: var(--red) !important;
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+
+/* スマホ ナビ */
+.sp_nav {
+  color: #fff;
+}
+
+.sp_nav ul {
+  background: #111;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.sp_nav ul li span {
+  font-size: .85rem;
+  color: #ddd;
+}
+
+/* ----------------------------------------------------------
+   3. 店舗セレクター + ヒーロー画像
+   ヒーロー画像を全面に敷き、カルビ/ホルモンボタンを下部にオーバーレイ
+   ---------------------------------------------------------- */
+.container-fluid.bg-bk {
+  background-color: transparent !important;
+}
+
+/* row 全体を hero の高さに合わせた positioned container にする */
+.container-fluid.bg-bk .row.wrap {
+  position: relative !important;
+  height: 58vw;
+  min-height: 240px;
+  overflow: hidden;
+  padding: 0 !important; /* py-2 px-0 を無効化 */
+}
+
+@media (min-width: 600px) {
+  .container-fluid.bg-bk .row.wrap {
+    height: 50vh;
+    min-height: 360px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-fluid.bg-bk .row.wrap {
+    height: 60vh;
+    max-height: 640px;
+  }
+}
+
+/* ヒーロー画像: row 全体を覆う */
+.top_image {
+  position: absolute !important;
+  inset: 0 !important;          /* top/right/bottom/left: 0 */
+  height: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-attachment: scroll !important;
+  z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  .top_image {
+    background-attachment: fixed !important;
+  }
+}
+
+/* ヒーロー下部に暗めグラデーションを敷いてボタンを見やすくする */
+.top_image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, .65) 0%,
+    rgba(0, 0, 0, .1) 45%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 店舗ボタン: ヒーロー下部に絶対配置 */
+.top_kalbi,
+.top_hormon {
+  position: absolute !important;
+  bottom: 20px !important;
+  z-index: 2;
+  width: auto !important;
+  max-width: 48% !important;
+  flex: none !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
+  transition: opacity .2s;
+}
+
+.top_kalbi  { left: 0 !important; }
+.top_hormon { right: 0 !important; }
+
+.top_kalbi:hover,
+.top_hormon:hover {
+  opacity: .8;
+}
+
+.top_kalbi img,
+.top_hormon img {
+  max-height: 56px;
+  width: auto;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .top_kalbi,
+  .top_hormon {
+    bottom: 28px !important;
+  }
+
+  .top_kalbi img,
+  .top_hormon img {
+    max-height: 68px;
+  }
+}
+
+/* ----------------------------------------------------------
+   5. コンテンツエリア全体
+   ---------------------------------------------------------- */
+section,
+.section,
+article {
+  background: transparent;
+}
+
+/* カード / ボックス */
+.card,
+.boxA,
+.boxB {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-gold) !important;
+  color: var(--text) !important;
+  border-radius: 0 !important;
+  box-shadow: var(--shadow) !important;
+  overflow: hidden;
+}
+
+.card-body {
+  background-color: var(--bg-card) !important;
+  color: var(--text) !important;
+  padding: 24px !important;
+}
+
+/* カード/ボックスのヘッダー行 */
+.boxA .head,
+.boxB .head,
+h2.card-header,
+h2.card-header.head {
+  background-color: #000 !important;
+  border-bottom: 1px solid var(--gold) !important;
+  color: var(--gold-light) !important;
+  border-radius: 0 !important;
+  padding: 14px 20px;
+  letter-spacing: .15em;
+  font-family: var(--font-serif) !important;
+  font-size: 1rem !important;
+}
+
+/* セクション見出し h2.titleA */
+h2.titleA {
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: var(--gold-light) !important;
+  font-family: var(--font-serif) !important;
+  font-size: 1.25rem !important;
+  font-weight: 500 !important;
+  letter-spacing: .25em !important;
+  padding: 0 0 16px !important;
+  text-align: center !important;
+  position: relative;
+}
+
+/* 金の装飾ライン（上下） */
+h2.titleA::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 32px;
+  background: var(--gold);
+  margin: 0 auto 16px;
+  opacity: .7;
+}
+
+h2.titleA::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: var(--gold-line);
+  margin: 16px auto 0;
+  opacity: .8;
+}
+
+/* 一般 h2 (page 内) */
+.page h2 {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-bottom: 2px solid var(--gold);
+}
+
+.page h3 {
+  background-color: #1a1a1a !important;
+  color: #fff !important;
+}
+
+/* お知らせ日付・メタ */
+.new-entry-card-date,
+.widget-entry-card-date {
+  color: var(--text-muted) !important;
+}
+
+/* dl/dt (お知らせリスト) */
+dl.row dt,
+dl.row dd {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+/* bootstrap .text-dark 打ち消し */
+.text-dark { color: var(--text) !important; }
+
+/* ----------------------------------------------------------
+   6. SNSセクション
+   ---------------------------------------------------------- */
+#sns {
+  background-color: var(--bg-section) !important;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 12px !important;
+  margin: 28px 0 !important;
+}
+
+/* キャッチコピー "いわまと直接つ・な・げ・るＳＮＳ" */
+.iwama-sns {
+  color: var(--gold-light) !important;
+  font-family: var(--font-serif) !important;
+  font-size: 1.1rem !important;
+  font-weight: 400 !important;
+  letter-spacing: .3em !important;
+  margin-bottom: 32px !important;
+  display: block;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.iwama-sns::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: var(--gold-line);
+}
+
+/* QRコードは全サイズ非表示 — タップ可能ボタンを優先 */
+.snsQR {
+  display: none !important;
+}
+
+/* SNS 各カラム
+   スマホ (< 540px): 縦積み・全幅ボタン でタップ領域を最大化
+   540px〜: 横並び col-6 のまま */
+.sns.col-6 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+@media (max-width: 539px) {
+  /* col-6 を縦積みに切り替え */
+  .sns.col-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 6px 16px;
+  }
+}
+
+/* SNS ボタン共通 */
+.sns.col-6 a {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff !important;
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  width: 100%;
+  max-width: 260px;
+  margin-top: 0;
+  line-height: 1.4;
+  transition: opacity .2s;
+}
+
+/* スマホ縦積み時はボタンをほぼ全幅に */
+@media (max-width: 539px) {
+  .sns.col-6 a {
+    max-width: 100%;
+    padding: 18px 20px;
+    font-size: 1.05rem;
+  }
+}
+
+/* PC では横幅を広げる */
+@media (min-width: 768px) {
+  .sns.col-6 a {
+    max-width: 280px;
+    padding: 18px 24px;
+    font-size: 1.05rem;
+  }
+}
+
+/* LINE */
+.sns.col-6:first-child a {
+  background: #06c755 !important;
+}
+
+/* Instagram */
+.sns.col-6:last-child a {
+  background: linear-gradient(135deg,
+    #f09433 0%, #e6683c 25%, #dc2743 50%,
+    #cc2366 75%, #bc1888 100%) !important;
+}
+
+.sns.col-6 a:hover {
+  opacity: .85 !important;
+  color: #fff !important;
+}
+
+/* SNS アイコン */
+.sns .fa-line,
+.sns .fa-instagram,
+.sns .fab,
+.sns .fa {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* SNS テキスト span を横並びに */
+.sns span {
+  display: inline !important;
+}
+
+/* ----------------------------------------------------------
+   7. 「ぴあ」受賞・特集エリア
+   ---------------------------------------------------------- */
+.piatitle {
+  color: var(--text) !important;
+}
+
+.pia150 {
+  color: var(--text-muted) !important;
+}
+
+/* ----------------------------------------------------------
+   8. フッター
+   ---------------------------------------------------------- */
+footer#footer,
+footer.footer {
+  background-color: #000 !important;
+  color: var(--text) !important;
+  border-top: 1px solid var(--border);
+}
+
+/* 店舗紹介見出し */
+footer h2.titleA,
+footer .titleA {
+  background-color: #000 !important;
+  border-bottom: 3px solid var(--gold) !important;
+  color: #fff !important;
+}
+
+/* 店舗情報テキスト (.font-kyoukasyo は inline style 付き) */
+footer .font-kyoukasyo,
+footer p.font-kyoukasyo {
+  color: #ccc !important;
+  font-size: .875rem !important;
+  border-top-color: var(--border) !important;
+  line-height: 1.9 !important;
+}
+
+/* 店舗ページへのボタン (inline style を !important で上書き) */
+footer a[href*="/kalbi/"][style],
+footer a[href*="/hormon/"][style] {
+  background-color: var(--red) !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  font-size: 1rem !important;
+  padding: 10px 20px !important;
+  display: inline-block;
+  margin-top: 14px;
+  letter-spacing: .05em;
+  transition: opacity .2s;
+}
+
+footer a[href*="/kalbi/"]:hover,
+footer a[href*="/hormon/"]:hover {
+  opacity: .82 !important;
+  color: #fff !important;
+}
+
+/* フッター CONTENTS リンク */
+footer .title {
+  color: var(--gold-light) !important;
+  font-family: var(--font-serif) !important;
+  letter-spacing: .25em;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+
+footer ul li a {
+  color: #bbb !important;
+}
+
+footer ul li a:hover {
+  color: var(--gold) !important;
+}
+
+/* 採用バナー */
+footer a > img[alt*="募集"],
+footer a > img[alt*="スタッフ"] {
+  max-width: 200px;
+  display: block;
+  margin: 0 auto 16px;
+  opacity: .8;
+  border-radius: var(--radius);
+}
+
+/* footer hr */
+footer hr {
+  border-color: var(--border);
+  opacity: 1;
+}
+
+/* コピーライト */
+.copy,
+.copy-info,
+#footer-in {
+  background-color: #000 !important;
+  color: var(--text-muted) !important;
+  border-top: 1px solid var(--border);
+  font-size: .8rem;
+}
+
+/* ----------------------------------------------------------
+   9. サイドバー
+   ---------------------------------------------------------- */
+#sidebar,
+.sidebar {
+  background: var(--bg-card) !important;
+  border-left: 1px solid var(--border);
+}
+
+.sidebar h3 {
+  background-color: #111 !important;
+  border-bottom-color: var(--red) !important;
+  color: #fff !important;
+}
+
+/* ----------------------------------------------------------
+   10. ブログ/新着カード
+   ---------------------------------------------------------- */
+.new-entry-card,
+.widget-entry-card,
+.e-card {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+.new-entry-card-title,
+.widget-entry-card-title,
+.card-title {
+  color: var(--text) !important;
+}
+
+.new-entry-card a,
+.widget-entry-card a {
+  color: var(--text) !important;
+}
+
+.new-entry-card a:hover,
+.widget-entry-card a:hover {
+  color: var(--gold) !important;
+}
+
+/* ----------------------------------------------------------
+   11. スマホ固定CTAバー (JS: assets/js/cta-bar.js が生成)
+   ---------------------------------------------------------- */
+#iwama-cta-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  background: #0a0a0a;
+  border-top: 1px solid var(--gold);
+  box-shadow: 0 -3px 16px rgba(0, 0, 0, .7);
+}
+
+#iwama-cta-bar a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px 10px;
+  color: #fff !important;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: .04em;
+  border-right: 1px solid #1e1e1e;
+  transition: background .15s;
+}
+
+#iwama-cta-bar a:last-child {
+  border-right: none;
+}
+
+#iwama-cta-bar a i {
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+
+#iwama-cta-bar a:hover {
+  opacity: .88;
+  color: #fff !important;
+}
+
+#iwama-cta-bar .cta-map  { background: #1c1c1c; }
+#iwama-cta-bar .cta-tel  { background: var(--red); }
+#iwama-cta-bar .cta-line { background: #06c755; }
+
+@media (min-width: 769px) {
+  #iwama-cta-bar { display: none; }
+}
+
+/* ----------------------------------------------------------
+   12. 余白・レイアウト調整
+   ---------------------------------------------------------- */
+@media (max-width: 767px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  /* bootstrap の mt-5/mb-5 を控えめに */
+  .mt-5, .my-5 { margin-top: 2rem !important; }
+  .mb-5, .my-5 { margin-bottom: 2rem !important; }
+
+  /* テキストサイズ下限 */
+  body { font-size: 15px; }
+
+  /* ヘッダーロゴをコンパクトに */
+  header .logo { max-height: 52px; }
+}
+
+/* ----------------------------------------------------------
+   13. 細部 / アクセシビリティ
+   ---------------------------------------------------------- */
+/* bootstrap の text-center はそのまま使う */
+
+/* cocoon のページネーション */
+.page-numbers {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+  background: var(--bg-card) !important;
+}
+
+.page-numbers.current {
+  background: var(--gold) !important;
+  color: #000 !important;
+  border-color: var(--gold) !important;
+}
+
+/* フォーカスリング (アクセシビリティ) */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* スクロールトップ */
+#go-to-top a {
+  background: var(--red) !important;
+  color: #fff !important;
+  border-radius: 50%;
+}
+
+/* ----------------------------------------------------------
+   14. 高級感 仕上げ
+   ---------------------------------------------------------- */
+
+/* セクション間の金の区切り線 */
+.container.wrap {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+section.container.wrap + section.container.wrap::before,
+.container.wrap + .container.wrap::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--gold-line);
+  margin: 0 auto 48px;
+  opacity: .6;
+}
+
+/* お知らせ dl 行 */
+dl.row {
+  border-bottom: 1px solid var(--border) !important;
+  padding: 10px 0 !important;
+  margin: 0 !important;
+}
+
+dl.row:first-child {
+  border-top: 1px solid var(--border) !important;
+}
+
+dl.row dt {
+  color: var(--gold-dim) !important;
+  font-family: var(--font-serif) !important;
+  font-size: .8rem;
+  letter-spacing: .05em;
+}
+
+/* 一般 h2 / h3 (店舗ページ等) */
+.page h2 {
+  background: transparent !important;
+  color: var(--gold-light) !important;
+  border: none !important;
+  border-bottom: 1px solid var(--border-gold) !important;
+  font-family: var(--font-serif) !important;
+  letter-spacing: .2em !important;
+  padding: 12px 0 !important;
+  margin: 36px 0 20px !important;
+}
+
+.page h3 {
+  background: transparent !important;
+  color: var(--text) !important;
+  border-left: 2px solid var(--gold) !important;
+  padding-left: 12px !important;
+  margin: 28px 0 14px !important;
+  font-family: var(--font-serif) !important;
+  letter-spacing: .12em !important;
+}
+
+/* 店舗情報テーブル */
+.page table td {
+  border-color: var(--border) !important;
+  color: var(--text);
+  padding: 10px 14px !important;
+}
+
+.page table td:first-child {
+  background-color: #1a1a1a !important;
+  color: var(--gold-light) !important;
+  font-family: var(--font-serif) !important;
+  letter-spacing: .08em;
+}
+
+/* 採用バナー周辺 */
+footer .container.mb-4 {
+  padding-top: 32px;
+}
+
+/* CTAバーのラベルを明朝に */
+#iwama-cta-bar a {
+  font-family: var(--font-serif) !important;
+  letter-spacing: .08em;
+}
+
+/* ページ全体へのサブルな質感 (疑似的なノイズ代わり) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, .012) 2px,
+    rgba(255, 255, 255, .012) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ヘッダー下部の金ライン */
+header::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--gold-line);
+  opacity: .5;
+}
